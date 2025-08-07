@@ -1,0 +1,352 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(-45deg, #74ebd5, #acb6e5, #d299c2, #f6f6f6);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.app {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.6s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, background 0.4s ease, color 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h1 {
+  margin-bottom: 25px;
+  font-size: 26px;
+  color: #111;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(0, 198, 255, 0.3);
+  animation: glow 1.8s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 6px rgba(0, 198, 255, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(0, 198, 255, 0.6);
+  }
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+input[type='url'],
+.result input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  transition: border-color 0.3s ease, transform 0.3s ease, background 0.4s ease, color 0.4s ease;
+}
+
+input:focus {
+  border-color: #00c6ff;
+  outline: none;
+  transform: scale(1.02);
+}
+
+button {
+  padding: 14px;
+  font-size: 16px;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.3);
+}
+
+.result {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.result input {
+  flex: 1;
+  min-width: 60%;
+}
+
+.result button {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  font-size: 14px;
+  white-space: nowrap;
+  position: relative;
+}
+
+.result button:hover::after {
+  content: '📋 Copy';
+  position: absolute;
+  top: -35px;
+  right: 0;
+  background: #333;
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  opacity: 0.9;
+  animation: fadeInTooltip 0.3s ease;
+}
+
+@keyframes fadeInTooltip {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 220px;
+  padding: 16px 22px;
+  color: white;
+  border-radius: 10px;
+  animation: slideIn 0.4s ease, fadeOut 0.5s ease 2.5s forwards;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
+  font-size: 15px;
+  transition: background 0.4s ease;
+}
+
+.toast.success {
+  background-color: #00c851;
+}
+
+.toast.error {
+  background-color: #ff4444;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .card {
+    padding: 30px 20px;
+  }
+
+  .result {
+    flex-direction: column;
+  }
+
+  .result input,
+  .result button {
+    width: 100%;
+  }
+}
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid #0072ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ripple button effect */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ripple-btn::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s, opacity 1s;
+  z-index: -1;
+}
+
+.ripple-btn:active::after {
+  transform: scale(2.5);
+  opacity: 1;
+}
+
+/* Dark Mode Toggle Button */
+.toggle-label {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(6px);
+  padding: 6px 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, color 0.3s ease;
+  z-index: 999;
+}
+
+/* Dark Mode Support */
+body:has(#dark-toggle:checked) {
+  background: #0e1117;
+  color: #e2e8f0;
+}
+
+body:has(#dark-toggle:checked) .card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+  color: #f1f5f9;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+body:has(#dark-toggle:checked) input,
+body:has(#dark-toggle:checked) .result input {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
+  border: 1px solid #475569;
+}
+
+body:has(#dark-toggle:checked) input:focus {
+  border-color: #3b82f6;
+}
+
+body:has(#dark-toggle:checked) button {
+  background: linear-gradient(to right, #4f46e5, #0ea5e9);
+  color: #ffffff;
+}
+
+body:has(#dark-toggle:checked) .toast.success {
+  background: #16a34a;
+  color: #f0fdf4;
+}
+
+body:has(#dark-toggle:checked) .toast.error {
+  background: #dc2626;
+  color: #fef2f2;
+}
+
+body:has(#dark-toggle:checked) .toggle-label {
+  background: rgba(30, 41, 59, 0.9);
+  color: #e2e8f0;
+  border: 1px solid #475569;
+}
+
+/* Tooltip override for dark mode */
+body:has(#dark-toggle:checked) .result button:hover::after {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+body:has(#dark-toggle:checked) .result button:hover::after {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+.result input {
+  color: inherit; /* Inherits from dark mode */
+}
+
+.toast {
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.result input {
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.3s ease;
+}
+.result button {
+  transition: background 0.4s ease, color 0.4s ease, box-shadow 0.3s ease;
+}
+body:has(#dark-toggle:checked) {
+  background: radial-gradient(circle at top left, #0e1117, #1e293b);
+}
